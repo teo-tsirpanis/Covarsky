@@ -14,8 +14,8 @@ namespace Covarsky
 {
     public class ClassRewriter
     {
-        private const string ContravariantIn = "ContravariantIn";
-        private const string CovariantOut = "CovariantOut";
+        private const string ContravariantIn = "ContravariantInAttribute";
+        private const string CovariantOut = "CovariantOutAttribute";
 
         private readonly AssemblyDefinition _assembly;
         private readonly TaskLoggingHelper? _log;
@@ -49,7 +49,8 @@ namespace Covarsky
 
         private TypeDefinition? FindSuitableAttribute(string name) =>
             _types.Find(type =>
-                type.BaseType.FullName == typeof(Attribute).FullName
+                // Looks like interfaces do not inherit from Object.
+                type.BaseType?.FullName == typeof(Attribute).FullName
                 && type.FullName == name
                 && type.IsNotPublic);
 
@@ -60,10 +61,10 @@ namespace Covarsky
 
         private void ApplyVariance(TypeDefinition type)
         {
-            bool hasAttribute(GenericParameter g, TypeDefinition attributeType) =>
+            bool hasAttribute(GenericParameter g, TypeDefinition? attributeType) =>
                 g.CustomAttributes.Any(attr => attr.AttributeType == attributeType);
 
-            void applyVariance(GenericParameter g, bool doIt, GenericParameterAttributes attr)
+            void patchGeneric(GenericParameter g, bool doIt, GenericParameterAttributes attr)
             {
                 if (doIt)
                     g.Attributes = (g.Attributes & ~ GenericParameterAttributes.VarianceMask) | attr;
@@ -78,20 +79,20 @@ namespace Covarsky
 
                 if (!g.IsNonVariant)
                 {
-                    _log?.LogWarning("Type {0}'s parameter {1} is already declared as variant and it will be ignored.",
+                    _log?.LogWarning("Type {0}'s parameter {1} is already variant and it will be ignored.",
                         type.FullName, g.Name);
                     return;
                 }
 
                 if (isCovariant && isContravariant)
                 {
-                    _log?.LogError("Type {0}'s parameter {1} cannot be both covariant and contravariant.",
+                    _log?.LogError("Type {0}'s parameter {1} cannot be declared as both covariant and contravariant.",
                         type.FullName, g.Name);
                     return;
                 }
 
-                applyVariance(g, isCovariant, GenericParameterAttributes.Covariant);
-                applyVariance(g, isContravariant, GenericParameterAttributes.Contravariant);
+                patchGeneric(g, isCovariant, GenericParameterAttributes.Covariant);
+                patchGeneric(g, isContravariant, GenericParameterAttributes.Contravariant);
             }
         }
 
