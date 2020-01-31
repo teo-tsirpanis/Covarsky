@@ -14,10 +14,9 @@ using Mono.Cecil;
 
 namespace Covarsky
 {
-    // Pun intended.
-    public class CovarskyAnalysis : Task
+    public class CovarskyTask : Task
     {
-        [Required] public string AssemblyPath { get; set; }
+        [Required] public string? AssemblyPath { get; set; }
         public string? OutputPath { get; set; }
 
         public void DoExecute()

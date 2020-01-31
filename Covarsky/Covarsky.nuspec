@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>Covarsky</id>
+    <version>$version$</version>
+    <description>Covarsky is a tool that provides co(ntra)variance in types written in a .NET language that does not support them, like F#.</description>
+    <authors>Theodore Tsirpanis</authors>
+    <copyright>Copyright © 2020 Theodore Tsirpanis. Licensed under the MIT License.</copyright>
+    <developmentDependency>true</developmentDependency>
+    <releaseNotes>Initial release</releaseNotes>
+    <projectUrl>https://github.com/teo-tsirpanis/Covarsky</projectUrl>
+    <license type="expression">MIT</license>
+    <tags>variance covariance contravariance msbuild</tags>
+    <repository type="git" url="https://github.com/teo-tsirpanis/Covarsky.git" />
+  </metadata>
+  <files>
+    <file src="tools\**\*.*" target="tools" />
+    <!--<file src="Covarsky.props" target="build" />
+    <file src="Covarsky.targets" target="build" />-->
+  </files>
+</package>
