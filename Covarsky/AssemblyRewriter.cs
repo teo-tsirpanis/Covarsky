@@ -12,7 +12,7 @@ using Mono.Cecil;
 
 namespace Covarsky
 {
-    public class ClassRewriter
+    public class AssemblyRewriter
     {
         private const string ContravariantIn = "ContravariantInAttribute";
         private const string CovariantOut = "CovariantOutAttribute";
@@ -23,7 +23,7 @@ namespace Covarsky
         private readonly TypeDefinition? _attributeCovariant;
         private readonly TypeDefinition? _attributeContravariant;
 
-        private ClassRewriter(AssemblyDefinition assembly, TaskLoggingHelper? log)
+        private AssemblyRewriter(AssemblyDefinition assembly, TaskLoggingHelper? log)
         {
             _assembly = assembly;
             _log = log;
@@ -96,9 +96,9 @@ namespace Covarsky
             }
         }
 
-        private static void RewriteAssembly(AssemblyDefinition asm, TaskLoggingHelper? log)
+        public static void RewriteAssembly(AssemblyDefinition asm, TaskLoggingHelper? log)
         {
-            var cr = new ClassRewriter(asm, log);
+            var cr = new AssemblyRewriter(asm, log);
             cr._types.ForEach(cr.ApplyVariance);
         }
     }
