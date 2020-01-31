@@ -1,7 +1,25 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFrameworks>net40;netstandard2.0</TargetFrameworks>
+        <LangVersion>8</LangVersion>
+        <Nullable>enable</Nullable>
+        <Title>Covarsky</Title>
+        <Description>Covarsky is a tool that provides co(ntra)variance in types written in a language that does not support them like F#.</Description>
+        <PackageProjectUrl>https://github.com/teo-tsirpanis/Covarsky</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Mono.Cecil" Version="0.11.1" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' != 'net40'">
+        <PackageReference Include="Microsoft.Build.Utilities.Core" Version="14.3.0" />
+    </ItemGroup>
+    <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
+        <Reference Include="Microsoft.Build.Framework" />
+        <Reference Include="Microsoft.Build.Utilities.v4.0" />
+    </ItemGroup>
 
 </Project>
