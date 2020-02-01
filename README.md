@@ -1,3 +1,6 @@
+![Licensed under the MIT License](https://img.shields.io/github/license/teo-tsirpanis/Covarsky.svg)
+[![NuGet](https://img.shields.io/nuget/v/Covarsky.svg)](https://nuget.org/packages/Covarsky)
+
 # Covarsky
 
 Covarsky is a tool that brings co(ntra)variant types to F# (or any other language that does not support them). It runs an MSBuild task that modifies assemblies after compilation.
