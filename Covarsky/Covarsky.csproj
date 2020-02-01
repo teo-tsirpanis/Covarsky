@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <NuspecFile>Covarsky.nuspec</NuspecFile>
-    <Version>0.0.1</Version>
+    <Version>0.0.2</Version>
     <NuspecProperties>version=$(Version)</NuspecProperties>
     <GenerateNuspecDependsOn>PreparePack;$(GenerateNuspecDependsOn)</GenerateNuspecDependsOn>
     <PackDependsOn>$(PackDependsOn);CleanAfterPack</PackDependsOn>

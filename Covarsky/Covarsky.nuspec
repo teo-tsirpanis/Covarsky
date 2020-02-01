@@ -7,7 +7,8 @@
     <authors>Theodore Tsirpanis</authors>
     <copyright>Copyright © 2020 Theodore Tsirpanis. Licensed under the MIT License.</copyright>
     <developmentDependency>true</developmentDependency>
-    <releaseNotes>Initial release</releaseNotes>
+    <releaseNotes>Fixed a bug that prevented Covarsky to work.
+Add better logging.</releaseNotes>
     <projectUrl>https://github.com/teo-tsirpanis/Covarsky</projectUrl>
     <license type="expression">MIT</license>
     <tags>variance covariance contravariance msbuild</tags>
