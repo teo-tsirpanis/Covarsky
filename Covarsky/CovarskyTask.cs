@@ -33,6 +33,7 @@ namespace Covarsky
 
             if (Log.HasLoggedErrors) return;
             using var outputFile = File.Create(outputPath);
+            resultingAssembly.Position = 0;
             resultingAssembly.CopyTo(outputFile);
         }
 
