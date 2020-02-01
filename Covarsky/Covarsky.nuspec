@@ -15,7 +15,7 @@
   </metadata>
   <files>
     <file src="tools\**\*.*" target="tools" />
-    <!--<file src="Covarsky.props" target="build" />
-    <file src="Covarsky.targets" target="build" />-->
+    <file src="Covarsky.props" target="build" />
+    <file src="Covarsky.targets" target="build" />
   </files>
 </package>

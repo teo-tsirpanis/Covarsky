@@ -1,0 +1,15 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <UsingTask TaskName="CovarskyTask" AssemblyFile="$(CovarskyTaskAssembly)"/>
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+
+  <Target Name="CovarskyAnalysis"
+          BeforeTargets="AfterCompile"
+          AfterTargets="CoreCompile"
+          Condition="'$(EnableCovarsky)' == 'true' AND '@(IntermediateAssembly)' != ''">
+    <!-- God knows why the intermediate assembly is an item instead of a property.
+    Are there many intermediate assemblies in some cases? -->
+    <CovarskyTask AssemblyPath="%(IntermediateAssembly.Identity)"/>
+  </Target>
+</Project>
