@@ -4,6 +4,7 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
 
+  <!-- Pun intended. -->
   <Target Name="CovarskyAnalysis"
           BeforeTargets="AfterCompile"
           AfterTargets="CoreCompile"

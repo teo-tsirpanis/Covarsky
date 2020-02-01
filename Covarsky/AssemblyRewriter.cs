@@ -61,17 +61,20 @@ namespace Covarsky
 
         private void ApplyVariance(TypeDefinition type)
         {
-            bool hasAttribute(GenericParameter g, TypeDefinition? attributeType) =>
+            static bool hasAttribute(GenericParameter g, TypeDefinition? attributeType) =>
                 g.CustomAttributes.Any(attr => attr.AttributeType == attributeType);
 
             void patchGeneric(GenericParameter g, bool doIt, GenericParameterAttributes attr)
             {
                 if (doIt)
+                {
                     g.Attributes = (g.Attributes & ~ GenericParameterAttributes.VarianceMask) | attr;
+                    _log?.LogMessage(MessageImportance.High, "Marking {0}'s {1} as {2}...",
+                        type.FullName, g.Name, attr);
+                }
             }
 
             if (!IsSuitableForVariance(type)) return;
-            _log?.LogMessage(MessageImportance.Low, "Processing {1}...", type.FullName);
             foreach (var g in type.GenericParameters)
             {
                 var isCovariant = hasAttribute(g, _attributeCovariant);
@@ -96,7 +99,7 @@ namespace Covarsky
             }
         }
 
-        public static void RewriteAssembly(AssemblyDefinition asm, TaskLoggingHelper? log)
+        public static void RewriteAssembly(AssemblyDefinition asm, TaskLoggingHelper? log = null)
         {
             var cr = new AssemblyRewriter(asm, log);
             cr._types.ForEach(cr.ApplyVariance);
