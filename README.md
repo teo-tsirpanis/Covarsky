@@ -53,7 +53,7 @@ Using these two attributes in a generic parameter that is already co(ntra)varian
 
 Using both attributes on the same time will raise an error and fail the build (unless something above hasn't already happened).
 
-> __DISCLAIMER:__ Using the attributes in any other wrong way (such as a covariant interface with a method that returns the generic type) will not be checked by Covarsky and may break your assembly.
+> __DISCLAIMER:__ Using the attributes in any other wrong way (such as a contravariant interface with a method that returns the generic type) will not be checked by Covarsky and may break your assembly.
 
 ## Maintainer(s)
 
