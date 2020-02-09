@@ -3,10 +3,10 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(CovarskyTaskAssembly)' == '' AND '$(MSBuildRuntimeType)' == 'Core'">
-    <CovarskyTaskAssembly>$(MSBuildThisFileDirectory)../tools/netstandard2.0/Covarsky.dll</CovarskyTaskAssembly>
+  <PropertyGroup Condition="'$(CovarskyAssembly)' == '' AND '$(MSBuildRuntimeType)' == 'Core'">
+    <CovarskyAssembly>$(MSBuildThisFileDirectory)../tools/netstandard2.0/Covarsky.dll</CovarskyAssembly>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(CovarskyTaskAssembly)' == '' AND '$(MSBuildRuntimeType)' != 'Core'">
-    <CovarskyTaskAssembly>$(MSBuildThisFileDirectory)../tools/net40/Covarsky.dll</CovarskyTaskAssembly>
+  <PropertyGroup Condition="'$(CovarskyAssembly)' == '' AND '$(MSBuildRuntimeType)' != 'Core'">
+    <CovarskyAssembly>$(MSBuildThisFileDirectory)../tools/net40/Covarsky.dll</CovarskyAssembly>
   </PropertyGroup>
 </Project>
