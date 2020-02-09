@@ -4,7 +4,6 @@
 // https://opensource.org/licenses/MIT
 
 using System;
-using System.IO;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using Mono.Cecil;
@@ -18,23 +17,25 @@ namespace Covarsky
     {
         [Required] public string? AssemblyPath { get; set; }
         public string? OutputPath { get; set; }
+        
+        public string? CustomInAttributeName { get; set; }
+        
+        public string? CustomOutAttributeName { get; set; }
 
         public void DoExecute()
         {
             var outputPath = OutputPath ?? AssemblyPath;
-            // Better not immediately write to the output file.
-            // Properly configuring it is quite complicated.
-            using var resultingAssembly = new MemoryStream();
-            using (var asm = AssemblyDefinition.ReadAssembly(AssemblyPath))
+            var readerParams = new ReaderParameters
             {
-                AssemblyRewriter.RewriteAssembly(asm, Log);
-                asm.Write(resultingAssembly);
-            }
+                ReadWrite = true
+            };
+            using var asm = AssemblyDefinition.ReadAssembly(AssemblyPath, readerParams);
+            AssemblyRewriter.RewriteAssembly(asm, CustomInAttributeName, CustomOutAttributeName, Log);
+            var writerParams = new WriterParameters
+            {
 
-            if (Log.HasLoggedErrors) return;
-            using var outputFile = File.Create(outputPath);
-            resultingAssembly.Position = 0;
-            resultingAssembly.CopyTo(outputFile);
+            };
+            asm.Write(outputPath, writerParams);
         }
 
         public override bool Execute()

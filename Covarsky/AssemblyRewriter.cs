@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
@@ -23,13 +24,13 @@ namespace Covarsky
         private readonly TypeDefinition? _attributeCovariant;
         private readonly TypeDefinition? _attributeContravariant;
 
-        private AssemblyRewriter(AssemblyDefinition assembly, TaskLoggingHelper? log)
+        private AssemblyRewriter(AssemblyDefinition assembly, string? customInName, string? customOutName, TaskLoggingHelper? log)
         {
             _assembly = assembly;
             _log = log;
             _types = DiscoverTypes();
-            _attributeCovariant = FindSuitableAttribute(CovariantOut);
-            _attributeContravariant = FindSuitableAttribute(ContravariantIn);
+            _attributeCovariant = FindSuitableAttribute(customInName ?? CovariantOut);
+            _attributeContravariant = FindSuitableAttribute(customOutName ?? ContravariantIn);
         }
 
         private List<TypeDefinition> DiscoverTypes()
@@ -99,9 +100,9 @@ namespace Covarsky
             }
         }
 
-        public static void RewriteAssembly(AssemblyDefinition asm, TaskLoggingHelper? log = null)
+        public static void RewriteAssembly(AssemblyDefinition asm, string? customInName = null, string? customOutName = null, TaskLoggingHelper? log = null)
         {
-            var cr = new AssemblyRewriter(asm, log);
+            var cr = new AssemblyRewriter(asm, customInName, customOutName, log);
             cr._types.ForEach(cr.ApplyVariance);
         }
     }
