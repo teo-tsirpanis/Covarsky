@@ -62,7 +62,7 @@ namespace Covarsky
             return type.IsInterface || type.BaseType.FullName == typeof(MulticastDelegate).FullName;
         }
 
-        private void ApplyVariance(TypeDefinition type)
+        private bool ApplyVariance(TypeDefinition type)
         {
             static bool hasAttribute(GenericParameter g, TypeDefinition? attributeType) =>
                 g.CustomAttributes.Any(attr => attr.AttributeType == attributeType);
@@ -77,7 +77,9 @@ namespace Covarsky
                 }
             }
 
-            if (!IsSuitableForVariance(type)) return;
+            var hasVarianceChanged = false;
+
+            if (!IsSuitableForVariance(type)) return false;
             foreach (var g in type.GenericParameters)
             {
                 var isCovariant = hasAttribute(g, _attributeCovariant);
@@ -87,19 +89,23 @@ namespace Covarsky
                 {
                     _log?.LogWarning("Type {0}'s parameter {1} is already variant and it will be ignored.",
                         type.FullName, g.Name);
-                    return;
+                    return false;
                 }
 
                 if (isCovariant && isContravariant)
                 {
                     _log?.LogError("Type {0}'s parameter {1} cannot be declared as both covariant and contravariant.",
                         type.FullName, g.Name);
-                    return;
+                    return false;
                 }
 
                 patchGeneric(g, isCovariant, GenericParameterAttributes.Covariant);
                 patchGeneric(g, isContravariant, GenericParameterAttributes.Contravariant);
+
+                hasVarianceChanged |= isCovariant || isContravariant;
             }
+
+            return hasVarianceChanged;
         }
 
         private bool ShouldRewriteAssembly()
@@ -146,9 +152,12 @@ namespace Covarsky
             var cr = new AssemblyRewriter(asm, customInName, customOutName, log);
             if (cr.ShouldRewriteAssembly())
             {
-                cr._types.ForEach(cr.ApplyVariance);
+                var wasModified = cr._types.Select(cr.ApplyVariance).Aggregate(false, (x, y) => x || y);
                 cr.MarkAsProcessedByCovarsky();
-                return true;
+                
+                if (!wasModified)
+                    log?.LogMessage("{0} was not modified. Skipping writing...", asm.Name.Name);
+                return wasModified;
             }
             log?.LogMessage("Skipping {0} as it has been already processed by Covarsky...", asm.Name.Name);
             return false;
