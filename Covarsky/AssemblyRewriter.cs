@@ -128,7 +128,19 @@ namespace Covarsky
             _assembly.MainModule.Types.Add(td);
         }
 
-        public static void RewriteAssembly(AssemblyDefinition asm, string? customInName = null,
+        /// <summary>
+        /// Rewrites the given assembly by making variant the types that must be. 
+        /// </summary>
+        /// <param name="asm">The Cecil assembly definition to process.</param>
+        /// <param name="customInName">A custom name for the attribute that makes types contravariant.
+        /// If not specified, defaults to <see cref="ContravariantIn"/>.</param>
+        /// <param name="customOutName">A custom name for the attribute that makes types covariant.
+        /// If not specified, defaults to <see cref="CovariantOut"/>.</param>
+        /// <param name="log">A <see cref="TaskLoggingHelper"/> to communicate logging events to MSBuild.</param>
+        /// <returns>Whether the assembly was actually processed, i.e. whether any type was modified, or
+        /// the assembly has already been processed by Covarsky. The latter is discovered with a dummy type added
+        /// to the resulting assembly.</returns>
+        public static bool RewriteAssembly(AssemblyDefinition asm, string? customInName = null,
             string? customOutName = null, TaskLoggingHelper? log = null)
         {
             var cr = new AssemblyRewriter(asm, customInName, customOutName, log);
@@ -136,9 +148,10 @@ namespace Covarsky
             {
                 cr._types.ForEach(cr.ApplyVariance);
                 cr.MarkAsProcessedByCovarsky();
+                return true;
             }
-            else
-                log?.LogMessage("Skipping {0} as it has been already processed by Covarsky...", asm.Name.Name);
+            log?.LogMessage("Skipping {0} as it has been already processed by Covarsky...", asm.Name.Name);
+            return false;
         }
     }
 }
