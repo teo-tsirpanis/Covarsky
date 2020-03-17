@@ -17,6 +17,7 @@ namespace Covarsky
     {
         private const string ContravariantIn = "ContravariantInAttribute";
         private const string CovariantOut = "CovariantOutAttribute";
+        private const string ProcessedByCovarsky = "ProcessedByCovarsky";
 
         private readonly AssemblyDefinition _assembly;
         private readonly TaskLoggingHelper? _log;
@@ -24,7 +25,8 @@ namespace Covarsky
         private readonly TypeDefinition? _attributeCovariant;
         private readonly TypeDefinition? _attributeContravariant;
 
-        private AssemblyRewriter(AssemblyDefinition assembly, string? customInName, string? customOutName, TaskLoggingHelper? log)
+        private AssemblyRewriter(AssemblyDefinition assembly, string? customInName, string? customOutName,
+            TaskLoggingHelper? log)
         {
             _assembly = assembly;
             _log = log;
@@ -100,10 +102,42 @@ namespace Covarsky
             }
         }
 
-        public static void RewriteAssembly(AssemblyDefinition asm, string? customInName = null, string? customOutName = null, TaskLoggingHelper? log = null)
+        private bool ShouldRewriteAssembly()
+        {
+            return !_types.Exists(td => td.FullName == ProcessedByCovarsky);
+        }
+
+        private void MarkAsProcessedByCovarsky()
+        {
+            const TypeAttributes typeAttributes =
+                TypeAttributes.NotPublic | TypeAttributes.Abstract | TypeAttributes.Sealed;
+            var td = new TypeDefinition("global", ProcessedByCovarsky, typeAttributes,
+                _assembly.MainModule.TypeSystem.Object);
+            
+            const FieldAttributes fieldAttributes = FieldAttributes.Assembly |
+                                                    FieldAttributes.Literal |
+                                                    FieldAttributes.Static |
+                                                    FieldAttributes.HasDefault;
+            var fieldDefinition = new FieldDefinition("CovarskyVersion", fieldAttributes, _assembly.MainModule.TypeSystem.String)
+            {
+                Constant = Utils.CovarskyVersion
+            };
+            td.Fields.Add(fieldDefinition);
+
+            _assembly.MainModule.Types.Add(td);
+        }
+
+        public static void RewriteAssembly(AssemblyDefinition asm, string? customInName = null,
+            string? customOutName = null, TaskLoggingHelper? log = null)
         {
             var cr = new AssemblyRewriter(asm, customInName, customOutName, log);
-            cr._types.ForEach(cr.ApplyVariance);
+            if (cr.ShouldRewriteAssembly())
+            {
+                cr._types.ForEach(cr.ApplyVariance);
+                cr.MarkAsProcessedByCovarsky();
+            }
+            else
+                log?.LogMessage("Skipping {0} as it has been already processed by Covarsky...", asm.Name.Name);
         }
     }
 }
