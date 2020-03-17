@@ -12,8 +12,12 @@
     <!-- God knows why the intermediate assembly is an item instead of a property.
     Are there many intermediate assemblies in some cases? -->
     <CovarskyTask
+            AssemblyPath="%(IntermediateAssembly.Identity)"
             CustomInAttributeName="$(CustomInAttributeName)"
             CustomOutAttributeName="$(CustomOutAttributeName)"
-            AssemblyPath="%(IntermediateAssembly.Identity)"/>
+            IntermediateDirectory="$(ProjectDir)$(IntermediateOutputPath)"
+            KeyOriginatorFile="$(KeyOriginatorFile)"
+            AssemblyOriginatorKeyFile="$(AssemblyOriginatorKeyFile)"
+            SignAssembly="$(SignAssembly)"/>
   </Target>
 </Project>
