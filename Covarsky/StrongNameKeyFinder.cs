@@ -14,7 +14,7 @@ namespace Covarsky
         private StrongNameKeyPair? _keyPair;
         private byte[]? _publicKey;
 
-        private void FindStrongNameKey(string keyPath, AssemblyDefinition asm)
+        private void FindStrongNameKey(string? keyPath, AssemblyDefinition asm)
         {
             if (!SignAssembly)
             {
@@ -41,7 +41,7 @@ namespace Covarsky
             }
         }
 
-        private string? GetKeyFilePath(string keyFilePath, AssemblyDefinition asm)
+        private string? GetKeyFilePath(string? keyFilePath, AssemblyDefinition asm)
         {
             if (keyFilePath != null)
             {
