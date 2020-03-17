@@ -109,9 +109,10 @@ namespace Covarsky
 
         private void MarkAsProcessedByCovarsky()
         {
+            _log?.LogMessage($"Adding the {ProcessedByCovarsky} class...");
             const TypeAttributes typeAttributes =
                 TypeAttributes.NotPublic | TypeAttributes.Abstract | TypeAttributes.Sealed;
-            var td = new TypeDefinition("global", ProcessedByCovarsky, typeAttributes,
+            var td = new TypeDefinition("", ProcessedByCovarsky, typeAttributes,
                 _assembly.MainModule.TypeSystem.Object);
             
             const FieldAttributes fieldAttributes = FieldAttributes.Assembly |
