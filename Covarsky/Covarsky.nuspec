@@ -5,9 +5,13 @@
     <version>$version$</version>
     <description>Covarsky is a tool that provides co(ntra)variance in types written in a .NET language that does not support them, like F#.</description>
     <authors>Theodore Tsirpanis</authors>
-    <copyright>Copyright © 2020 Theodore Tsirpanis. Licensed under the MIT License.</copyright>
+    <copyright>Copyright © 2020 Theodore Tsirpanis. Licensed under the MIT License.
+Contains some code from Fody, which is licensed under the MIT License as well.</copyright>
     <developmentDependency>true</developmentDependency>
-    <releaseNotes>Fixed another bug that prevented Covarsky from working.</releaseNotes>
+    <releaseNotes>Assemblies that are processed by Covarsky are marked with an internal class
+named ProcessedByCovarsky, and are not touched again on incremental builds.
+    
+Add support for strong-named assemblies. The code for this feature was copied from Fody.</releaseNotes>
     <projectUrl>https://github.com/teo-tsirpanis/Covarsky</projectUrl>
     <license type="expression">MIT</license>
     <tags>variance covariance contravariance msbuild fsharp</tags>
