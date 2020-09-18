@@ -1,0 +1,8 @@
+version: 1.2.0.{build}
+image: Visual Studio 2019
+nuget:
+  disable_publish_on_pr: true
+build_script:
+  - pwsh: ./test.ps1
+artifacts:
+  - path: "*.binlog"
