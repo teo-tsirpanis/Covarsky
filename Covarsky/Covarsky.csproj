@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net40;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
     <LangVersion>8</LangVersion>
     <Nullable>enable</Nullable>
     <IncludeBuildOutput>false</IncludeBuildOutput>
@@ -12,19 +12,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mono.Cecil" Version="0.11.1" />
+    <PackageReference Include="Mono.Cecil" Version="0.11.3" />
+    <PackageReference Include="Sigourney" Version="0.1.1" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' != 'net40'">
+  <ItemGroup Condition="'$(TargetFramework)' != 'net45'">
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="14.3.0" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
-    <Reference Include="Microsoft.Build.Framework" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
   </ItemGroup>
 
   <Target Name="PreparePack" BeforeTargets="GenerateNuspec" DependsOnTargets="Build">
     <ItemGroup>
       <_FrameworksToBuild Include="$(TargetFrameworks)" />
+      <_FrameworksToBuild Include="$(TargetFramework)" Condition="'@(_FrameworksToBuild)' == ''" />
       <_ProjectsToPublish Include="$(MSBuildThisFileFullPath)" AdditionalProperties="TargetFramework=%(_FrameworksToBuild.Identity);PublishDir=tools\%(_FrameworksToBuild.Identity)\" />
     </ItemGroup>
     <RemoveDir Directories="tools/" />
