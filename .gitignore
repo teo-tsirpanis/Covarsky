@@ -351,3 +351,5 @@ MigrationBackup/
 .ionide/
 .idea/
 *.dll
+Covarsky/tools/
+Covarsky.Tests/test-packages
