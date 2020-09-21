@@ -8,7 +8,8 @@
     <copyright>Copyright © 2020 Theodore Tsirpanis. Licensed under the MIT License.
 Contains some code from Fody, which is licensed under the MIT License as well.</copyright>
     <developmentDependency>true</developmentDependency>
-    <releaseNotes>Covarsky is functional again.</releaseNotes>
+    <releaseNotes>Fixed occasional NullReferenceExceptions.
+Exceptions during Covarsky's execution will show a stacktrace.</releaseNotes>
     <projectUrl>https://github.com/teo-tsirpanis/Covarsky</projectUrl>
     <license type="expression">MIT</license>
     <tags>variance covariance contravariance msbuild fsharp</tags>
