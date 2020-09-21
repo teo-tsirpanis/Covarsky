@@ -62,15 +62,7 @@ namespace Covarsky
 
         public override bool Execute()
         {
-            try
-            {
-                DoExecute();
-            }
-            catch (Exception ex)
-            {
-                Log.LogErrorFromException(ex);
-            }
-
+            DoExecute();
             return !Log.HasLoggedErrors;
         }
     }

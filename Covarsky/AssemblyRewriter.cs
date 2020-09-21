@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2020 Theodore Tsirpanis
+// Copyright (c) 2020 Theodore Tsirpanis
 //
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
@@ -59,7 +59,8 @@ namespace Covarsky
 
         private static bool IsSuitableForVariance(TypeDefinition type)
         {
-            return type.IsInterface || type.BaseType.FullName == typeof(MulticastDelegate).FullName;
+            // Apart from interfaces, the special <Module> class also does not have a base type.
+            return type.IsInterface || type.BaseType?.FullName == typeof(MulticastDelegate).FullName;
         }
 
         private bool ApplyVariance(TypeDefinition type)
