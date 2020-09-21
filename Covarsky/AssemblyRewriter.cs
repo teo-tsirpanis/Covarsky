@@ -31,7 +31,7 @@ namespace Covarsky
         }
 
         private static bool ApplyVariance(TypeDefinition type, TypeDefinition? attributeCovariant,
-            TypeDefinition? attributeContravariant, ILogger? log)
+            TypeDefinition? attributeContravariant, ILogger log)
         {
             static bool HasAttribute(GenericParameter g, TypeDefinition? attributeType) =>
                 attributeType != null
@@ -42,7 +42,7 @@ namespace Covarsky
                 if (doIt)
                 {
                     g.Attributes = (g.Attributes & ~ GenericParameterAttributes.VarianceMask) | attr;
-                    log?.Information("Marking {0}'s {1} as {2}...", type.FullName, g.Name, attr);
+                    log.Information("Marking {0}'s {1} as {2}...", type.FullName, g.Name, attr);
                 }
             }
 
@@ -56,14 +56,14 @@ namespace Covarsky
 
                 if (!g.IsNonVariant)
                 {
-                    log?.Warning("Type {0}'s parameter {1} is already variant and it will be ignored.",
+                    log.Warning("Type {0}'s parameter {1} is already variant and it will be ignored.",
                         type.FullName, g.Name);
                     return false;
                 }
 
                 if (isCovariant && isContravariant)
                 {
-                    log?.Error("Type {0}'s parameter {1} cannot be declared as both covariant and contravariant.",
+                    log.Error("Type {0}'s parameter {1} cannot be declared as both covariant and contravariant.",
                         type.FullName, g.Name);
                     return false;
                 }
@@ -77,11 +77,16 @@ namespace Covarsky
             return hasVarianceChanged;
         }
 
-        public static bool DoWeave(AssemblyDefinition asm, ILogger? log, string? customOutName = null, string? customInName = null)
+        public static bool DoWeave(AssemblyDefinition asm, ILogger log, string? customOutName = null, string? customInName = null)
         {
             var types = asm.Modules.SelectMany(ModuleDefinitionRocks.GetAllTypes).ToList();
             var attributeCovariant = FindSuitableAttribute(types, customOutName ?? CovariantOut);
+            if (attributeCovariant == null)
+                log.Debug("No suitable attribute for marking covariant parameters was found.");
             var attributeContravariant = FindSuitableAttribute(types, customInName ?? ContravariantIn);
+            if (attributeContravariant == null)
+                log.Debug("No suitable attribute for marking contravariant parameters was found");
+
             return
                 types
                     .Select(t => ApplyVariance(t, attributeCovariant, attributeContravariant, log))
