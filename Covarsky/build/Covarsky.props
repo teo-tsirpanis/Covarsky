@@ -1,0 +1,7 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <CovarskyAssembly>$(MSBuildThisFileDirectory)../tools/netstandard2.0/Covarsky.dll</CovarskyAssembly>
+    <SigourneyRegisteredTargetFiles>$(SigourneyRegisteredTargetFiles);$(MSBuildThisFileDirectory)Covarsky.Sigourney.targets</SigourneyRegisteredTargetFiles>
+    <SigourneyRegisteredTargets>$(SigourneyRegisteredTargets);CovarskyAnalysis</SigourneyRegisteredTargets>
+  </PropertyGroup>
+</Project>

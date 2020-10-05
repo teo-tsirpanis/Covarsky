@@ -1,37 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
-    <LangVersion>8</LangVersion>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>1.2.0</Version>
+    <Description>Covarsky is a tool that provides co(ntra)variance in types written in a .NET language that does not support them like F#.</Description>
+    <Authors>Theodore Tsirpanis</Authors>
+    <Copyright>Copyright © Theodore Tsirpanis. Licensed under the MIT License.</Copyright>
+    <PackageReleaseNotes>Covarsky is functional again.</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/teo-tsirpanis/Covarsky</PackageProjectUrl>
+    <PackageTags>variance;covariance;contravariance;msbuild;fsharp;sigourney</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <IncludeBuildOutput>false</IncludeBuildOutput>
-    <NuspecFile>Covarsky.nuspec</NuspecFile>
-    <Version>1.2.0</Version>
-    <NuspecProperties>version=$(Version)</NuspecProperties>
-    <GenerateNuspecDependsOn>PreparePack;$(GenerateNuspecDependsOn)</GenerateNuspecDependsOn>
-    <PackDependsOn>$(PackDependsOn);CleanAfterPack</PackDependsOn>
+    <SigourneyPublish>true</SigourneyPublish>
+    <NoWarn>$(NoWarn);NU5128;NU5129</NoWarn>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Mono.Cecil" Version="0.11.2" />
-    <PackageReference Include="Sigourney" Version="0.1.1" />
+    <None Include="build/**" Pack="true" PackagePath="build" />
+    <PackageReference Include="Sigourney" Version="0.2.0" PrivateAssets="compile" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' != 'net45'">
-    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="14.3.0" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
-    <Reference Include="Microsoft.Build.Utilities.v4.0" />
-  </ItemGroup>
-
-  <Target Name="PreparePack" BeforeTargets="GenerateNuspec" DependsOnTargets="Build">
-    <ItemGroup>
-      <_FrameworksToBuild Include="$(TargetFrameworks)" />
-      <_FrameworksToBuild Include="$(TargetFramework)" Condition="'@(_FrameworksToBuild)' == ''" />
-      <_ProjectsToPublish Include="$(MSBuildThisFileFullPath)" AdditionalProperties="TargetFramework=%(_FrameworksToBuild.Identity);PublishDir=tools\%(_FrameworksToBuild.Identity)\" />
-    </ItemGroup>
-    <RemoveDir Directories="tools/" />
-    <MSBuild Projects="@(_ProjectsToPublish)" Properties="NoBuild=true;Configuration=$(Configuration)" Targets="Publish" BuildInParallel="$(BuildInParallel)" />
-  </Target>
-  <Target Name="CleanAfterPack" AfterTargets="Pack">
-    <RemoveDir Directories="tools/" />
-  </Target>
 </Project>
