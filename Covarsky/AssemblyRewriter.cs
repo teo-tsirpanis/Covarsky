@@ -42,7 +42,7 @@ namespace Covarsky
                 if (doIt)
                 {
                     g.Attributes = (g.Attributes & ~ GenericParameterAttributes.VarianceMask) | attr;
-                    log.Information("Marking {0}'s {1} as {2}...", type.FullName, g.Name, attr);
+                    log.Information("Marking type {0}'s parameter {1} as {2}...", type.FullName, g.Name, attr);
                 }
             }
 
@@ -58,7 +58,7 @@ namespace Covarsky
                 {
                     log.Warning("Type {0}'s parameter {1} is already variant and it will be ignored.",
                         type.FullName, g.Name);
-                    return false;
+                    continue;
                 }
 
                 if (isCovariant && isContravariant)
@@ -77,7 +77,8 @@ namespace Covarsky
             return hasVarianceChanged;
         }
 
-        public static bool DoWeave(AssemblyDefinition asm, ILogger log, string? customOutName = null, string? customInName = null)
+        public static bool DoWeave(AssemblyDefinition asm, ILogger log, string? customOutName = null,
+            string? customInName = null)
         {
             var types = asm.Modules.SelectMany(ModuleDefinitionRocks.GetAllTypes).ToList();
             var attributeCovariant = FindSuitableAttribute(types, customOutName ?? CovariantOut);
