@@ -1,8 +1,6 @@
 function Test-ExitCode {if ($LASTEXITCODE -ne 0) {exit $LASTEXITCODE}}
 
-$PackagesDir = './Covarsky.Tests/test-packages'
-
-Remove-Item $PackagesDir -Recurse
+$PackagesDir = './Covarsky.Tests/packages'
 
 dotnet pack Covarsky/Covarsky.csproj -o $PackagesDir /p:Version=0.0.0-test
 Test-ExitCode
