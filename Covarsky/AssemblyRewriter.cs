@@ -80,11 +80,21 @@ namespace Covarsky
         public static bool DoWeave(AssemblyDefinition asm, ILogger log, string? customOutName = null,
             string? customInName = null)
         {
+            static string FallbackIfNullOrEmpty(string? str, string fallback) =>
+                string.IsNullOrEmpty(str) ? fallback : str!;
+
+            var attributeOutName = FallbackIfNullOrEmpty(customOutName, CovariantOut);
+            var attributeInName = FallbackIfNullOrEmpty(customInName, ContravariantIn);
+            if (attributeInName.Equals(attributeOutName, StringComparison.Ordinal)) {
+                log.Error("The names of Covarsky's attributes cannot be the same.");
+                return false;
+            }
+
             var types = asm.Modules.SelectMany(ModuleDefinitionRocks.GetAllTypes).ToList();
-            var attributeCovariant = FindSuitableAttribute(types, customOutName ?? CovariantOut);
+            var attributeCovariant = FindSuitableAttribute(types, attributeOutName);
             if (attributeCovariant == null)
                 log.Debug("No suitable attribute for marking covariant parameters was found.");
-            var attributeContravariant = FindSuitableAttribute(types, customInName ?? ContravariantIn);
+            var attributeContravariant = FindSuitableAttribute(types, attributeInName);
             if (attributeContravariant == null)
                 log.Debug("No suitable attribute for marking contravariant parameters was found");
 
