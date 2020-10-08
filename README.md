@@ -1,6 +1,6 @@
 ![Licensed under the MIT License](https://img.shields.io/github/license/teo-tsirpanis/Covarsky.svg)
 [![NuGet](https://img.shields.io/nuget/v/Covarsky.svg)][nuget]
-[![Build Status](https://img.shields.io/appveyor/ci/teo-tsirpanis/Covarsky/master.svg)][sigourney]
+[![Build Status](https://img.shields.io/appveyor/ci/teo-tsirpanis/Covarsky/master.svg)](https://ci.appveyor.com/project/teo-tsirpanis/covarsky)
 
 # Covarsky
 
