@@ -1,29 +1,13 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <UsingTask Condition="$(CovarskyEnable) != false" TaskName="CovarskyTask" AssemblyFile="$(CovarskyAssembly)"/>
-  <Target Name="CovarskyPrepare"
-          BeforeTargets="CovarskyAnalysis">
-    <GetNextSentinel
-      IntermediateDirectory="$(IntermediateDirectory)"
-      WeaverName="Covarsky"
-      AssemblyPath="@(IntermediateAssembly)"
-      InputSentinel="$(SigourneyInputSentinel)"
-      OutputSentinel="$(SigourneyOutputSentinel)">
-      <Output TaskParameter="InputSentinel" PropertyName="SigourneyInputSentinel" />
-      <Output TaskParameter="OutputSentinel" PropertyName="SigourneyOutputSentinel" />
-    </GetNextSentinel>
-  </Target>
   <!-- Pun intended. -->
-  <Target Name="CovarskyAnalysis"
-          Condition="$(CovarskyEnable) != false"
-          Inputs="$(SigourneyInputSentinel)"
-          Outputs="$(SigourneyOutputSentinel)">
+  <Target Name="CovarskyAnalysis" Condition="$(CovarskyEnable) != false">
     <Warning
       Condition="'$(EnableCovarsky)' != ''"
       Text="The 'EnableCovarsky' property is deprecated. Use 'CovarskyEnable' instead and set it to false only if you want to disable Covarsky." />
     <CovarskyTask
       AssemblyPath="%(IntermediateAssembly.Identity)"
       WeaverName="Covarsky"
-      OutputSentinel="$(SigourneyOutputSentinel)"
       Configuration="@(SigourneyConfiguration)"
       CustomInAttributeName="$(CustomInAttributeName)"
       CustomOutAttributeName="$(CustomOutAttributeName)" />

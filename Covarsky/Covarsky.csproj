@@ -18,6 +18,6 @@ Covarsky is now enabled by default. Set the CovarskyEnable property to false to 
   </PropertyGroup>
   <ItemGroup>
     <None Include="build/**" Pack="true" PackagePath="build" />
-    <PackageReference Include="Sigourney" Version="0.2.1" PrivateAssets="compile" />
+    <PackageReference Include="Sigourney" Version="0.3.0" PrivateAssets="compile" />
   </ItemGroup>
 </Project>
