@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Covarsky", "Covarsky\Covars
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Covarsky.Tests", "Covarsky.Tests\Covarsky.Tests.fsproj", "{0FD46CAF-C764-44CC-A20A-F93FB6C404AC}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Covarsky.TestTool", "Covarsky.TestTool\Covarsky.TestTool.fsproj", "{D191E319-278E-4C64-AEF5-A93E456BDD47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +46,17 @@ Global
 		{0FD46CAF-C764-44CC-A20A-F93FB6C404AC}.Release|x64.Build.0 = Release|Any CPU
 		{0FD46CAF-C764-44CC-A20A-F93FB6C404AC}.Release|x86.ActiveCfg = Release|Any CPU
 		{0FD46CAF-C764-44CC-A20A-F93FB6C404AC}.Release|x86.Build.0 = Release|Any CPU
+		{D191E319-278E-4C64-AEF5-A93E456BDD47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D191E319-278E-4C64-AEF5-A93E456BDD47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D191E319-278E-4C64-AEF5-A93E456BDD47}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D191E319-278E-4C64-AEF5-A93E456BDD47}.Debug|x64.Build.0 = Debug|Any CPU
+		{D191E319-278E-4C64-AEF5-A93E456BDD47}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D191E319-278E-4C64-AEF5-A93E456BDD47}.Debug|x86.Build.0 = Debug|Any CPU
+		{D191E319-278E-4C64-AEF5-A93E456BDD47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D191E319-278E-4C64-AEF5-A93E456BDD47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D191E319-278E-4C64-AEF5-A93E456BDD47}.Release|x64.ActiveCfg = Release|Any CPU
+		{D191E319-278E-4C64-AEF5-A93E456BDD47}.Release|x64.Build.0 = Release|Any CPU
+		{D191E319-278E-4C64-AEF5-A93E456BDD47}.Release|x86.ActiveCfg = Release|Any CPU
+		{D191E319-278E-4C64-AEF5-A93E456BDD47}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
