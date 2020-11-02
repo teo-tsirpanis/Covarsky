@@ -1,12 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.3.0</Version>
+    <Version>1.3.1</Version>
     <Description>Covarsky is a tool that provides co(ntra)variance in types written in a .NET language that does not support them like F#.</Description>
     <Authors>Theodore Tsirpanis</Authors>
     <Copyright>Copyright © Theodore Tsirpanis. Licensed under the MIT License.</Copyright>
-    <PackageReleaseNotes>Covarsky is now powered by Sigourney.
-Covarsky is now enabled by default. Set the CovarskyEnable property to false to disable it.</PackageReleaseNotes>
+    <PackageReleaseNotes>Covarsky was updated to use Sigourney 0.3.0, with the enhancements it brings. No user action is needed.</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/teo-tsirpanis/Covarsky</PackageProjectUrl>
     <PackageTags>covariance;contravariance;fsharp;sigourney</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
