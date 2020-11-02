@@ -353,3 +353,4 @@ MigrationBackup/
 *.dll
 Covarsky/tools/
 Covarsky.Tests/packages
+test-logs.zip
