@@ -52,7 +52,8 @@ namespace Covarsky
                 if (doIt)
                 {
                     g.Attributes = (g.Attributes & ~ GenericParameterAttributes.VarianceMask) | attr;
-                    log.Information("Marking type {0}'s parameter {1} as {2}...", type.FullName, g.Name, attr);
+                    log.Information("Marking type {TypeName}'s parameter {GenericParameterName} as {VarianceType}",
+                        type.FullName, g.Name, attr);
                 }
             }
 
@@ -66,14 +67,14 @@ namespace Covarsky
 
                 if (!g.IsNonVariant)
                 {
-                    log.Warning("Type {0}'s parameter {1} is already variant and it will be ignored.",
+                    log.Warning("Type {TypeName}'s parameter {GenericParameterName} is already variant and it will be ignored",
                         type.FullName, g.Name);
                     continue;
                 }
 
                 if (isCovariant && isContravariant)
                 {
-                    log.Error("Type {0}'s parameter {1} cannot be declared as both covariant and contravariant.",
+                    log.Error("Type {TypeName}'s parameter {GenericParameterName} cannot be declared as both covariant and contravariant",
                         type.FullName, g.Name);
                     return false;
                 }
@@ -96,14 +97,14 @@ namespace Covarsky
             var attributeOutName = FallbackIfNullOrEmpty(customOutName, CovariantOut);
             var attributeInName = FallbackIfNullOrEmpty(customInName, ContravariantIn);
             if (attributeInName.Equals(attributeOutName, StringComparison.Ordinal)) {
-                log.Error("The names of Covarsky's attributes cannot be the same.");
+                log.Error("The names of Covarsky's attributes cannot be the same");
                 return false;
             }
 
             var types = asm.Modules.SelectMany(ModuleDefinitionRocks.GetAllTypes).ToList();
             var attributeCovariant = FindSuitableAttribute(types, attributeOutName);
             if (attributeCovariant == null)
-                log.Debug("No suitable attribute for marking covariant parameters was found.");
+                log.Debug("No suitable attribute for marking covariant parameters was found");
             var attributeContravariant = FindSuitableAttribute(types, attributeInName);
             if (attributeContravariant == null)
                 log.Debug("No suitable attribute for marking contravariant parameters was found");
