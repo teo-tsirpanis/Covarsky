@@ -92,6 +92,11 @@ namespace Covarsky
             static string FallbackIfNullOrEmpty(string? str, string fallback) =>
                 string.IsNullOrEmpty(str) ? fallback : str!;
 
+            void WarnOnCustomAttribute(string? attrName)
+            {
+                if (attrName != null) log.CustomAttributeNotFound(attrName);
+            }
+
             var attributeOutName = FallbackIfNullOrEmpty(customOutName, CovariantOut);
             var attributeInName = FallbackIfNullOrEmpty(customInName, ContravariantIn);
             if (attributeInName.Equals(attributeOutName, StringComparison.Ordinal)) {
@@ -102,10 +107,17 @@ namespace Covarsky
             var types = asm.Modules.SelectMany(ModuleDefinitionRocks.GetAllTypes).ToList();
             var attributeCovariant = FindSuitableAttribute(types, attributeOutName);
             if (attributeCovariant == null)
+            {
+                WarnOnCustomAttribute(customOutName);
                 log.NoCovariantAttributeFound();
+            }
+
             var attributeContravariant = FindSuitableAttribute(types, attributeInName);
             if (attributeContravariant == null)
+            {
+                WarnOnCustomAttribute(customInName);
                 log.NoContravariantAttributeFound();
+            }
 
             return
                 types
