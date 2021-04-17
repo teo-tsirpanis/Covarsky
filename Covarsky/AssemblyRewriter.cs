@@ -33,9 +33,19 @@ namespace Covarsky
         private static bool ApplyVariance(TypeDefinition type, TypeDefinition? attributeCovariant,
             TypeDefinition? attributeContravariant, ILogger log)
         {
-            static bool HasAttribute(GenericParameter g, TypeDefinition? attributeType) =>
-                attributeType != null
-                && g.CustomAttributes.Any(attr => attr.AttributeType == attributeType);
+            // Returns if the given generic parameter has an attribute of the given type, and removes it if it does.
+            // Removing the attribute class as well is not so simple, and would fail even when it is not used somewhere
+            // else where Covarsky doesn't care. Instead, we will just remove the attribute from the generic parameter,
+            // and let the IL Linker remove the class if it sees fit.
+            static bool CheckAndRemoveAttribute(GenericParameter g, TypeDefinition? attributeType)
+            {
+                if (attributeType == null) return false;
+                var attribute = g.CustomAttributes.SingleOrDefault(attr => attr.AttributeType == attributeType);
+                var hasAttribute = attribute != null;
+                if (hasAttribute)
+                    g.CustomAttributes.Remove(attribute);
+                return hasAttribute;
+            }
 
             void PatchGeneric(GenericParameter g, bool doIt, GenericParameterAttributes attr)
             {
@@ -51,8 +61,8 @@ namespace Covarsky
             if (!IsSuitableForVariance(type)) return false;
             foreach (var g in type.GenericParameters)
             {
-                var isCovariant = HasAttribute(g, attributeCovariant);
-                var isContravariant = HasAttribute(g, attributeContravariant);
+                var isCovariant = CheckAndRemoveAttribute(g, attributeCovariant);
+                var isContravariant = CheckAndRemoveAttribute(g, attributeContravariant);
 
                 if (!g.IsNonVariant)
                 {

@@ -59,7 +59,7 @@ As you see, fully qualified names are accepted. The attribute classes however st
 
 ### Disabling Covarsky
 
-Since version 1.3.0 Covarsky is enabled by default when you install the package. If for some reason you want to disable it you can do it with the following property:
+Since version 1.3.0 Covarsky is enabled by default when you install the package. If for any reason you want to disable it you can do it with the following property:
 
 ``` xml
 <PropertyGroup>
@@ -69,13 +69,13 @@ Since version 1.3.0 Covarsky is enabled by default when you install the package.
 
 ## Caveats
 
-* After Covarsky's execution, the two attributes will _not_ be removed.
+* ~~After Covarsky's execution, the two attributes will _not_ be removed.~~ Since version 1.4.0 the attributes will be removed from the generic parameters, allowing them to be trimmed by the IL Linker. User code should not rely on their existence.
 
 * These two attributes will be ignored if used anywhere but in the generic parameters of an interface or a delegate.
 
 * Using these two attributes in a generic parameter that is already co(ntra)variant will raise a warning but will be ignored as well.
 
-* Using both attributes on the same time will raise an error and fail the build (unless something above hasn't already happened).
+* Using both attributes on the same generic parameter will raise an error and fail the build (unless something above hasn't already happened).
 
 * _Using the attributes in any other wrong way (such as a contravariant interface with a method that returns the generic type) __will not be checked by Covarsky and may break your assembly.___
 
