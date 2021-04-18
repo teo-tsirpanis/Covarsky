@@ -48,13 +48,11 @@ namespace Covarsky
                 return hasAttribute;
             }
 
-            void PatchGeneric(GenericParameter g, bool doIt, GenericParameterAttributes attr)
+            void PatchGenericIf(bool condition, GenericParameter g, GenericParameterAttributes attr)
             {
-                if (doIt)
-                {
-                    g.Attributes = (g.Attributes & ~ GenericParameterAttributes.VarianceMask) | attr;
-                    log.MarkingType(type.FullName, g.Name, attr);
-                }
+                if (!condition) return;
+                g.Attributes = (g.Attributes & ~ GenericParameterAttributes.VarianceMask) | attr;
+                log.MarkingType(type.FullName, g.Name, attr);
             }
 
             var hasVarianceChanged = false;
@@ -62,8 +60,10 @@ namespace Covarsky
             if (!IsSuitableForVariance(type)) return false;
             foreach (var g in type.GenericParameters)
             {
-                var isCovariant = CheckAndRemoveAttribute(g, attributeCovariant);
-                var isContravariant = CheckAndRemoveAttribute(g, attributeContravariant);
+                var shouldBeCovariant = CheckAndRemoveAttribute(g, attributeCovariant);
+                var shouldBeContravariant = CheckAndRemoveAttribute(g, attributeContravariant);
+
+                if (!shouldBeCovariant && !shouldBeContravariant) continue;
 
                 if (!g.IsNonVariant)
                 {
@@ -71,16 +71,16 @@ namespace Covarsky
                     continue;
                 }
 
-                if (isCovariant && isContravariant)
+                if (shouldBeCovariant && shouldBeContravariant)
                 {
                     log.CannotDeclareBothVariances(type.FullName, g.Name);
                     return false;
                 }
 
-                PatchGeneric(g, isCovariant, GenericParameterAttributes.Covariant);
-                PatchGeneric(g, isContravariant, GenericParameterAttributes.Contravariant);
+                PatchGenericIf(shouldBeCovariant, g, GenericParameterAttributes.Covariant);
+                PatchGenericIf(shouldBeContravariant, g, GenericParameterAttributes.Contravariant);
 
-                hasVarianceChanged |= isCovariant || isContravariant;
+                hasVarianceChanged = true;
             }
 
             return hasVarianceChanged;
@@ -99,7 +99,8 @@ namespace Covarsky
 
             var attributeOutName = FallbackIfNullOrEmpty(customOutName, CovariantOut);
             var attributeInName = FallbackIfNullOrEmpty(customInName, ContravariantIn);
-            if (attributeInName.Equals(attributeOutName, StringComparison.Ordinal)) {
+            if (attributeInName.Equals(attributeOutName, StringComparison.Ordinal))
+            {
                 log.AttributeNamesCannotBeTheSame();
                 return false;
             }
