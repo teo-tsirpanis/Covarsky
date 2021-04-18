@@ -74,7 +74,7 @@ namespace Covarsky
                 if (shouldBeCovariant && shouldBeContravariant)
                 {
                     log.CannotDeclareBothVariances(type.FullName, g.Name);
-                    return false;
+                    continue;
                 }
 
                 PatchGenericIf(shouldBeCovariant, g, GenericParameterAttributes.Covariant);
