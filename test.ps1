@@ -12,6 +12,7 @@ $TestLogs = './test-logs/'
 $TestProject = './Covarsky.Tests/Covarsky.Tests.fsproj'
 
 Remove-Directory-Checked $TestLogs
+Remove-Directory-Checked $PackagesDir
 dotnet clean /v:m /nodereuse:false
 dotnet pack Covarsky/Covarsky.csproj -o $PackagesDir /p:Version=0.0.0-test
 
