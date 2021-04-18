@@ -24,11 +24,9 @@ namespace Covarsky
                 && type.FullName == name
                 && type.IsNotPublic);
 
-        private static bool IsSuitableForVariance(TypeDefinition type)
-        {
+        private static bool IsSuitableForVariance(TypeDefinition type) =>
             // Apart from interfaces, the special <Module> class also does not have a base type.
-            return type.IsInterface || type.BaseType?.FullName == typeof(MulticastDelegate).FullName;
-        }
+            type.IsInterface || type.BaseType?.FullName == typeof(MulticastDelegate).FullName;
 
         private static bool ApplyVariance(TypeDefinition type, TypeDefinition? attributeCovariant,
             TypeDefinition? attributeContravariant, ILogger log)
