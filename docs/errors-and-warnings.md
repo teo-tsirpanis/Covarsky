@@ -38,7 +38,7 @@ It is not raised if an attribute with the default name (`CovariantOutAttribute` 
 
 ### Type `{TypeName}`'s parameter `{GenericParameterName}` is already variant and Covarsky will not change it.
 
-Covarsky found an attribute on a generic type parameter that is already co(tra)variant.
+Covarsky found an attribute on a generic type parameter that is already co(tra)variant. This parameter's variance will not be changed.
 
 This warning will be raised even if the parameter's variance matches the attribute (for example `CovariantOut` being applied on an already covariant parameter).
 

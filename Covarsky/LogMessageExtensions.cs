@@ -37,8 +37,8 @@ namespace Covarsky
                     "Type {TypeName}'s parameter {GenericParameterName} is already variant and Covarsky will not change it.",
                     typeName, genericParameterName);
 
-        public static void
-            CannotDeclareBothVariances(this ILogger logger, string typeName, string genericParameterName) =>
+        public static void CannotDeclareBothVariances(this ILogger logger, string typeName,
+            string genericParameterName) =>
             logger
                 .WithMsBuildCode(4)
                 .Error(
@@ -48,8 +48,8 @@ namespace Covarsky
         public static void MarkingType(this ILogger logger, string typeName, string genericParameterName,
             GenericParameterAttributes varianceType) =>
             logger
-                .Information("Marking type {TypeName}'s parameter {GenericParameterName} as {VarianceType}.", typeName,
-                    genericParameterName, varianceType);
+                .Information("Marking type {TypeName}'s parameter {GenericParameterName} as {VarianceType}.",
+                    typeName, genericParameterName, varianceType);
 
         public static void NoCovariantAttributeFound(this ILogger logger) =>
             logger
