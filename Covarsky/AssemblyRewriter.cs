@@ -55,7 +55,7 @@ namespace Covarsky
                 log.MarkingType(type.FullName, g.Name, attr);
             }
 
-            var hasVarianceChanged = false;
+            var hasTypeChanged = false;
 
             if (!IsSuitableForVariance(type)) return false;
             foreach (var g in type.GenericParameters)
@@ -80,10 +80,10 @@ namespace Covarsky
                 PatchGenericIf(shouldBeCovariant, g, GenericParameterAttributes.Covariant);
                 PatchGenericIf(shouldBeContravariant, g, GenericParameterAttributes.Contravariant);
 
-                hasVarianceChanged = true;
+                hasTypeChanged = true;
             }
 
-            return hasVarianceChanged;
+            return hasTypeChanged;
         }
 
         public static bool DoWeave(AssemblyDefinition asm, ILogger log, string? customOutName = null,
@@ -120,10 +120,9 @@ namespace Covarsky
                 log.NoContravariantAttributeFound();
             }
 
-            return
-                types
-                    .Select(t => ApplyVariance(t, attributeCovariant, attributeContravariant, log))
-                    .Aggregate(false, (x, y) => x || y);
+            return (attributeCovariant != null || attributeContravariant != null) && types
+                .Select(t => ApplyVariance(t, attributeCovariant, attributeContravariant, log))
+                .Aggregate(false, (x, y) => x || y);
         }
     }
 }
