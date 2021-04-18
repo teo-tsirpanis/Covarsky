@@ -26,7 +26,7 @@ type internal ContravariantInAttribute() =
     inherit Attribute()
 ```
 
-> __Warning:__ The attributes must be declared in the global namespace, and must be internal.
+> __Warning:__ The attributes must be declared in the global namespace, directly derive from the `Attribute` class and be internal.
 
 3. You are good to go! Let's see an example.
 
@@ -78,6 +78,10 @@ Since version 1.3.0 Covarsky is enabled by default when you install the package.
 * Using both attributes on the same generic parameter will raise an error and fail the build (unless something above hasn't already happened).
 
 * _Using the attributes in any other wrong way (such as a contravariant interface with a method that returns the generic type) __will not be checked by Covarsky and may break your assembly.___
+
+## Documentation
+
+* [Errors and warnings](docs/errors-and-warnings.md)
 
 ## Maintainer(s)
 
