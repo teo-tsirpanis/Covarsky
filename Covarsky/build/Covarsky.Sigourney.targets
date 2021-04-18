@@ -5,6 +5,12 @@
     <Warning
       Condition="'$(EnableCovarsky)' != ''"
       Text="The 'EnableCovarsky' property is deprecated. Use 'CovarskyEnable' instead and set it to false only if you want to disable Covarsky." />
+    <Warning
+      Condition="'$(Language)' == 'C#'"
+      Text="It is not recommended to use Covarsky on a C# project. Instead, use the language's 'in' and 'out' keywords for the best support and type safety." />
+    <Warning
+      Condition="'$(Language)' == 'VB'"
+      Text="It is not recommended to use Covarsky on a Visual Basic project. Instead, use the language's 'In' and 'Out' keywords for the best support and type safety." />
     <CovarskyTask
       AssemblyPath="%(IntermediateAssembly.Identity)"
       WeaverName="Covarsky"
