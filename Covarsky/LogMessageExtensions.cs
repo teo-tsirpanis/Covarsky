@@ -45,6 +45,11 @@ namespace Covarsky
                     "Type {TypeName}'s parameter {GenericParameterName} cannot be declared as both covariant and contravariant.",
                     typeName, genericParameterName);
 
+        public static void AttributeIsPublic(this ILogger logger, string attributeName) =>
+            logger
+                .WithMsBuildCode(5)
+                .Warning("Attribute {AttributeName} will be ignored because it is public.", attributeName);
+
         public static void MarkingType(this ILogger logger, string typeName, string genericParameterName,
             GenericParameterAttributes varianceType) =>
             logger

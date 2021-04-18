@@ -49,3 +49,9 @@ This warning indicates either a bug with Covarsky (which takes measures not to p
 ### Type `{TypeName}`'s parameter `{GenericParameterName}` cannot be declared as both covariant and contravariant.
 
 This error is raised when a generic type parameter has both Covarsky's attributes applied to it. Obviously it cannot be both covariant and contravariant, and one of the two attributes must be removed to make the error disappear.
+
+## Warning `COVARSKY0105`
+
+### Attribute `{AttributeName}` will be ignored because it is public.
+
+Covarsky requires its attributes to be internal and will ignore them if they are public. Simply making them internal will solve the problem.

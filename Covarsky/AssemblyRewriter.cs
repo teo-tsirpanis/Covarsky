@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Rocks;
-using ILogger = Serilog.ILogger;
+using Serilog;
 
 namespace Covarsky
 {
@@ -17,12 +17,23 @@ namespace Covarsky
         private const string ContravariantIn = "ContravariantInAttribute";
         private const string CovariantOut = "CovariantOutAttribute";
 
-        private static TypeDefinition? FindSuitableAttribute(List<TypeDefinition> types, string name) =>
-            types.Find(type =>
+        private static TypeDefinition? FindSuitableAttribute(List<TypeDefinition> types, string name, ILogger log)
+        {
+            var foundAttribute = types.Find(type =>
                 // Looks like interfaces do not inherit from Object.
                 type.BaseType?.FullName == typeof(Attribute).FullName
-                && type.FullName == name
-                && type.IsNotPublic);
+                && type.FullName == name);
+
+            switch (foundAttribute)
+            {
+                case {IsNotPublic: true}:
+                    return foundAttribute;
+                default:
+                    if (foundAttribute != null)
+                        log.AttributeIsPublic(foundAttribute.FullName);
+                    return null;
+            }
+        }
 
         private static bool IsSuitableForVariance(TypeDefinition type) =>
             // Apart from interfaces, the special <Module> class also does not have a base type.
@@ -104,14 +115,14 @@ namespace Covarsky
             }
 
             var types = asm.Modules.SelectMany(ModuleDefinitionRocks.GetAllTypes).ToList();
-            var attributeCovariant = FindSuitableAttribute(types, attributeOutName);
+            var attributeCovariant = FindSuitableAttribute(types, attributeOutName, log);
             if (attributeCovariant == null)
             {
                 WarnOnCustomAttribute(customOutName);
                 log.NoCovariantAttributeFound();
             }
 
-            var attributeContravariant = FindSuitableAttribute(types, attributeInName);
+            var attributeContravariant = FindSuitableAttribute(types, attributeInName, log);
             if (attributeContravariant == null)
             {
                 WarnOnCustomAttribute(customInName);
