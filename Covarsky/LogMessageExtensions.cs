@@ -31,7 +31,7 @@ namespace Covarsky
         public static void MarkingType(this ILogger logger, string typeName, string genericParameterName,
             GenericParameterAttributes varianceType) =>
             logger
-                .Information("Marking type {TypeName}'s parameter {GenericParameterName} as {VarianceType}", typeName, 
+                .Information("Marking type {TypeName}'s parameter {GenericParameterName} as {VarianceType}", typeName,
                     genericParameterName, varianceType);
 
         public static void TypeIsAlreadyVariant(this ILogger logger, string typeName, string genericParameterName) =>
