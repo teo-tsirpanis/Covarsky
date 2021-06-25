@@ -51,7 +51,7 @@ If for any reason you want to customize the attribute names Covarsky will recogn
 ``` xml
 <PropertyGroup>
     <CustomInAttributeName>MyLibrary.MakeItContravariantPleaseAttribute</CustomInAttributeName>
-    <CustomOutAttributeName>MyLibrary.MakeItContravariantPleaseAttribute</CustomOutAttributeName>
+    <CustomOutAttributeName>MyLibrary.MakeItCovariantPleaseAttribute</CustomOutAttributeName>
 </PropertyGroup>
 ```
 
