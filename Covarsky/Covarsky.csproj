@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Version>1.4.0</Version>
@@ -22,8 +22,8 @@ Covarsky's logging system was improved; it will show more messages to help you u
   </PropertyGroup>
   <ItemGroup>
     <None Include="build/**" Pack="true" PackagePath="build" />
-    <PackageReference Include="Sigourney" Version="0.3.2" PrivateAssets="compile" />
+    <PackageReference Include="Sigourney" Version="0.3.3" PrivateAssets="compile" />
     <PackageReference Include="Serilog" Version="2.10.0" PrivateAssets="all" />
-    <PackageReference Include="Serilog.Sinks.MSBuild" Version="1.3.1" PrivateAssets="all" />
+    <PackageReference Include="Serilog.Sinks.MSBuild" Version="1.4.0" PrivateAssets="all" />
   </ItemGroup>
 </Project>
