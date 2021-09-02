@@ -7,8 +7,8 @@ module Covarsky.Tests
 
 open Xunit
 
-type General = obj
-type Specific = string
+type General() = class end
+type Specific() = inherit General()
 
 type DContrav<[<ContravariantIn>] 'T> = delegate of 'T -> unit
 type DCov<[<CovariantOut>] 'T> = delegate of unit -> 'T
@@ -17,7 +17,7 @@ type ICov<[<CovariantOut>] 'T> = interface end
 
 [<Fact>]
 let ``Covariant delegate`` () =
-    let d = DCov<Specific>(fun _ -> null)
+    let d = DCov<Specific>(fun _ -> Specific())
     let dCast = unbox<DCov<General>> d
     Assert.Equal(d :> obj, dCast)
 
