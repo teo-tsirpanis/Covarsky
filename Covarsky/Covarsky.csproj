@@ -18,8 +18,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="build/**" Pack="true" PackagePath="build" />
-    <PackageReference Include="Sigourney" Version="0.3.3" PrivateAssets="compile" />
-    <PackageReference Include="Serilog" Version="2.10.0" PrivateAssets="all" />
-    <PackageReference Include="Serilog.Sinks.MSBuild" Version="1.4.0" PrivateAssets="all" />
+    <PackageReference Include="Sigourney" Version="0.4.1" PrivateAssets="all" Publish="true" />
+    <PackageReference Include="Sigourney.Build" Version="0.4.1" />
   </ItemGroup>
 </Project>
