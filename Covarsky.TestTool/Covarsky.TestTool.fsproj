@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="Argu" Version="6.1.1" />
     <PackageReference Include="Serilog.Sinks.Console" Version="4.0.0" />
+    <PackageReference Include="Sigourney" Version="0.4.1" />
     <ProjectReference Include="..\Covarsky\Covarsky.csproj" />
   </ItemGroup>
 </Project>
