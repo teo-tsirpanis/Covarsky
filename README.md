@@ -1,6 +1,6 @@
 ![Licensed under the MIT License](https://img.shields.io/github/license/teo-tsirpanis/Covarsky.svg)
 [![NuGet](https://img.shields.io/nuget/v/Covarsky.svg)][nuget]
-[![Build Status](https://img.shields.io/appveyor/ci/teo-tsirpanis/Covarsky/mainstream.svg)](https://ci.appveyor.com/project/teo-tsirpanis/covarsky)
+[![CI build status](https://github.com/teo-tsirpanis/Covarsky/actions/workflows/ci.yml/badge.svg?branch=mainstream&event=push)](https://github.com/teo-tsirpanis/Covarsky/actions/workflows/ci.yml)
 
 # Covarsky
 

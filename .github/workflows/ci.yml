@@ -1,0 +1,33 @@
+name: Test
+on: [push, pull_request]
+jobs:
+  test:
+    # name: Run tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+      fail-fast: false
+    timeout-minutes: 30
+
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2.1.0
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+        if: ${{ contains(matrix.os, 'windows') }}
+      - name: Run the test script
+        shell: pwsh
+        run: ./test.ps1
+      - name: Upload the failed test logs
+        uses: actions/upload-artifact@v3
+        with:
+          name: testlogs-${{ matrix.os }}
+          path: ./test-logs/
+        if: ${{ failure() }}

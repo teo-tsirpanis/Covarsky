@@ -20,5 +20,4 @@ for ($i = 1; ($i -le 3) -and ($LASTEXITCODE -eq 0); $i++) {
     dotnet test $TestProject /nodereuse:false ("/bl:{0}run-{1}.binlog" -f $TestLogs, $i)
 }
 
-Compress-Archive $TestLogs -DestinationPath "test-logs.zip" -Force
 exit $LASTEXITCODE

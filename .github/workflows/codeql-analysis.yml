@@ -1,0 +1,32 @@
+name: CodeQL
+on:
+  push:
+    branches: [ mainstream ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ mainstream ]
+    paths-ignore:
+      - '**/*.md'
+      - '**/*.txt'
+  schedule:
+    - cron: '41 9 * * 5'
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: csharp
+    - name: Build Covarsky
+      run: dotnet build Covarsky/Covarsky.csproj
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
