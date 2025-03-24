@@ -22,6 +22,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="build/**" Pack="true" PackagePath="build" />
+    <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.2.25" PrivateAssets="all" />
     <PackageReference Include="Sigourney" Version="0.5.0" PrivateAssets="all" Publish="true" />
     <PackageReference Include="Sigourney.Build" Version="0.5.0" />
   </ItemGroup>
