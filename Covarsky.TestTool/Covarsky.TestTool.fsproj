@@ -8,8 +8,8 @@
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Argu" Version="6.1.1" />
-    <PackageReference Include="Serilog.Sinks.Console" Version="4.0.0" />
+    <PackageReference Include="Argu" Version="6.2.5" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageReference Include="Sigourney" Version="0.5.0" />
     <ProjectReference Include="..\Covarsky\Covarsky.csproj" />
   </ItemGroup>
