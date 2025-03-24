@@ -1,0 +1,28 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Test",
+            "type": "process",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "command": "pwsh",
+            "args": [
+                "test.ps1"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean",
+            "type": "process",
+            "command": "git",
+            "args": [
+                "clean",
+                "-Xdf"
+            ],
+            "problemMatcher": []
+        }
+    ]
+}
