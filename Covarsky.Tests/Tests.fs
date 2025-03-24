@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-module Covarsky.Tests
+module Covarsky.Tests.Tests
 
 open Xunit
 
