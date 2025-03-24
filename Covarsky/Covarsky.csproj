@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Version>1.4.2</Version>
@@ -12,13 +12,36 @@
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <DevelopmentDependency>true</DevelopmentDependency>
-    <IncludeBuildOutput>false</IncludeBuildOutput>
-    <SigourneyPublish>true</SigourneyPublish>
-    <NoWarn>$(NoWarn);NU5128;NU5129</NoWarn>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Label="Dependency packing">
+    <GenerateDependencyFile>true</GenerateDependencyFile>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
+    <BuildOutputTargetFolder>tools</BuildOutputTargetFolder>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <ItemGroup>
     <None Include="build/**" Pack="true" PackagePath="build" />
-    <PackageReference Include="Sigourney" Version="0.4.1" PrivateAssets="all" Publish="true" />
-    <PackageReference Include="Sigourney.Build" Version="0.4.1" />
+    <PackageReference Include="Sigourney" Version="0.5.0" PrivateAssets="all" Publish="true" />
+    <PackageReference Include="Sigourney.Build" Version="0.5.0" />
   </ItemGroup>
+  <Target
+      Name="AddBuildDependencyFileToBuiltProjectOutputGroupOutput"
+      BeforeTargets="BuiltProjectOutputGroup">
+    <ItemGroup>
+      <BuiltProjectOutputGroupOutput
+        Include="$(ProjectDepsFilePath)"
+        TargetPath="$(ProjectDepsFileName)"
+        FinalOutputPath="$(ProjectDepsFilePath)" />
+    </ItemGroup>
+  </Target>
+  <Target
+    Name="CopyProjectReferencesToPackage"
+    DependsOnTargets="ResolveReferences">
+    <ItemGroup>
+        <BuildOutputInPackage
+            Include="@(ReferenceCopyLocalPaths)"
+            TargetPath="%(ReferenceCopyLocalPaths.DestinationSubPath)" />
+    </ItemGroup>
+  </Target>
 </Project>
