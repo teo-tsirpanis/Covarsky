@@ -12,13 +12,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
       - name: Pack
-        run: dotnet pack -c Release -o ./artifacts
+        shell: pwsh
+        run: ./pack.ps1
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
           name: artifacts
-          path: ./artifacts
+          path: ./bin
           retention-days: 7
       - name: Publish release artifacts
         uses: actions/github-script@v7
@@ -27,7 +32,7 @@ jobs:
             const fs = require('fs');
             const path = require('path');
             const repo = context.repo;
-            const globber = await glob.create('./artifacts/**/*');
+            const globber = await glob.create('./bin/**/*');
             for await (const file of globber.globGenerator()) {
               console.log(`Uploading file: ${file}`);
               await github.rest.repos.uploadReleaseAsset({
