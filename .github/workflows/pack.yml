@@ -1,0 +1,44 @@
+name: Pack
+
+on:
+  push:
+    branches:
+      - master
+  release:
+    types: [published]
+
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pack
+        run: dotnet pack -c Release -o ./artifacts
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifacts
+          path: ./artifacts
+          retention-days: 7
+      - name: Publish release artifacts
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const repo = context.repo;
+            const globber = await glob.create('./artifacts/**/*');
+            for await (const file of globber.globGenerator()) {
+              console.log(`Uploading file: ${file}`);
+              await github.rest.repos.uploadReleaseAsset({
+                owner: repo.owner,
+                repo: repo.repo,
+                release_id: ${{ github.event.release.id }},
+                headers: {
+                  'content-type': 'application/octet-stream',
+                  'content-length': fs.statSync(file).size
+                },
+                name: path.basename(file),
+                data: fs.readFileSync(file)
+              });
+            }
