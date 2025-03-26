@@ -3,7 +3,7 @@ name: Pack
 on:
   push:
     branches:
-      - master
+      - mainstream
   release:
     types: [published]
 
