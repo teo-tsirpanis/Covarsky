@@ -4,7 +4,7 @@
 
 # Covarsky
 
-Covarsky is a tool that brings co(ntra)variant types to F# or any other .ΝΕΤ language that does not natively support them. Powered by [Sigourney], it runs an MSBuild task that modifies assemblies after compilation.
+Covarsky is a tool that brings covariant and contravariant generic types to .ΝΕΤ languages that do not natively support them like F#. Powered by [Sigourney], it runs an MSBuild task that modifies the assembly after compilation.
 
 ## How to use
 
@@ -73,7 +73,7 @@ Since version 1.3.0 Covarsky is enabled by default when you install the package.
 
 * These two attributes will be ignored if used anywhere but in the generic parameters of an interface or a delegate.
 
-* Using these two attributes in a generic parameter that is already co(ntra)variant will raise a warning but will be ignored as well.
+* Using these two attributes in a generic parameter that is already variant will raise a warning but will be ignored as well.
 
 * Using both attributes on the same generic parameter will raise an error and fail the build (unless something above hasn't already happened).
 
@@ -81,7 +81,7 @@ Since version 1.3.0 Covarsky is enabled by default when you install the package.
 
 ## Documentation
 
-* [Errors and warnings](docs/errors-and-warnings.md)
+* [Diagnostics](docs/diagnostics.md)
 
 ## Maintainer(s)
 

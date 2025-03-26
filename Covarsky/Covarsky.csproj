@@ -2,13 +2,14 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Version>1.4.2</Version>
-    <Description>Covarsky is a tool that provides co(ntra)variance in types written in a .NET language that does not support them like F#.</Description>
+    <Description>Provides support for declaring covariant and contravariant generic parameters for languages that lack native support, like F#.</Description>
     <Authors>Theodore Tsirpanis</Authors>
     <Copyright>Copyright © Theodore Tsirpanis. Licensed under the MIT License.</Copyright>
     <PackageReleaseNotes>Covarsky was updated to use Sigourney 0.4.1. There are no user-visible changes.</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/teo-tsirpanis/Covarsky</PackageProjectUrl>
     <PackageTags>covariance;contravariance;fsharp;sigourney</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <DevelopmentDependency>true</DevelopmentDependency>
@@ -21,6 +22,7 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="../README.md" Pack="true" PackagePath="" />
     <None Include="build/**" Pack="true" PackagePath="build" />
     <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.2.25" PrivateAssets="all" />
     <PackageReference Include="Sigourney" Version="0.5.0" PrivateAssets="all" Publish="true" />

@@ -16,7 +16,7 @@ Starting with Covarsky 1.3.0, Covarsky is enabled by default as long as the pack
 
 ### It is not recommended to use Covarsky on a C# project. Instead, use the language's 'in' and 'out' keywords for the best support and type safety.
 
-Covarsky was created to be used by language that don't natively support co(ntra)variance in generic parameters. C# supports it ever since it became available and therefore C# projects should use the language's facilities instead of Covarsky.
+Covarsky was created to be used by languages that don't natively support variant generic parameters. C# supports it ever since it became available and therefore C# projects should use the language's facilities instead of Covarsky.
 
 ## Warning `COVARSKY0003`
 
@@ -54,7 +54,7 @@ Covarsky found an attribute on a generic type parameter that is already co(tra)v
 
 This warning will be raised even if the parameter's variance matches the attribute (for example `CovariantOut` being applied on an already covariant parameter).
 
-This warning indicates either a bug with Covarsky (which takes measures not to process the same assembly twice), or that Covarsky is being used from a language that supports co(ntra)variance (and shouldn't use Covarsky anyway).
+This warning indicates either a bug with Covarsky (which takes measures not to process the same assembly twice), or that Covarsky is being used from a language that supports generic variance (and shouldn't use Covarsky anyway).
 
 ## Error `COVARSKY0104`
 
