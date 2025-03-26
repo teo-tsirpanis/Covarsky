@@ -18,7 +18,8 @@ namespace Covarsky
     {
         private static ILogger WithMsBuildCode(this ILogger logger, int code) => logger
             .ForContext(MSBuildProperties.Subcategory, nameof(Covarsky))
-            .ForContext(MSBuildProperties.MessageCode, $"COVARSKY01{code:00}");
+            .ForContext(MSBuildProperties.MessageCode, $"COVARSKY01{code:00}")
+            .ForContext(MSBuildProperties.HelpLink, $"https://github.com/teo-tsirpanis/Covarsky/blob/mainstream/docs/diagnostics.md#COVARSKY01{code:00}");
 
         public static void AttributeNamesCannotBeTheSame(this ILogger logger) =>
             logger

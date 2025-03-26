@@ -4,11 +4,15 @@ Starting with Covarsky 1.4.0, all errors and warnings it might raise have an MSB
 
 ## Warning `COVARSKY0001`
 
+<a name="COVARSKY0001"></a>
+
 ### The 'EnableCovarsky' property is deprecated. Use 'CovarskyEnable' instead and set it to false only if you want to disable Covarsky.
 
 Starting with Covarsky 1.3.0, Covarsky is enabled by default as long as the package is installed. To disable it, set the `CovarskyEnable` MSBuild property to `false`. The similarly named `EnableCovarsky` property was used by earlier versions of Covarsky, and this warning ensures it is no longer used.
 
 ## Warning `COVARSKY0002`
+
+<a name="COVARSKY0002"></a>
 
 ### It is not recommended to use Covarsky on a C# project. Instead, use the language's 'in' and 'out' keywords for the best support and type safety.
 
@@ -16,17 +20,23 @@ Covarsky was created to be used by language that don't natively support co(ntra)
 
 ## Warning `COVARSKY0003`
 
+<a name="COVARSKY0003"></a>
+
 ### It is not recommended to use Covarsky on a Visual Basic project. Instead, use the language's 'In' and 'Out' keywords for the best support and type safety.
 
 Similar to warning `COVARSKY0002`, but for Visual Basic.
 
 ## Error `COVARSKY0101`
 
+<a name="COVARSKY0101"></a>
+
 ### The names of Covarsky's attributes cannot be the same.
 
 Covarsky supports customizing the names of the attributes that mark covariant and contravariant generic parameters. Obviously these two attribute names cannot be the same.
 
 ## Warning `COVARSKY0102`
+
+<a name="COVARSKY0102"></a>
 
 ### Custom attribute `{AttributeName}` was not found.
 
@@ -35,6 +45,8 @@ This warning is shown if an attribute with a custom name was not found in the as
 It is not raised if an attribute with the default name (`CovariantOutAttribute` or `ContravariantInAttribute`) is not found.
 
 ## Warning `COVARSKY0103`
+
+<a name="COVARSKY0103"></a>
 
 ### Type `{TypeName}`'s parameter `{GenericParameterName}` is already variant and Covarsky will not change it.
 
@@ -46,11 +58,15 @@ This warning indicates either a bug with Covarsky (which takes measures not to p
 
 ## Error `COVARSKY0104`
 
+<a name="COVARSKY0104"></a>
+
 ### Type `{TypeName}`'s parameter `{GenericParameterName}` cannot be declared as both covariant and contravariant.
 
 This error is raised when a generic type parameter has both Covarsky's attributes applied to it. Obviously it cannot be both covariant and contravariant, and one of the two attributes must be removed to make the error disappear.
 
 ## Warning `COVARSKY0105`
+
+<a name="COVARSKY0105"></a>
 
 ### Attribute `{AttributeName}` will be ignored because it is public.
 
