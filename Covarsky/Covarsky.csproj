@@ -1,11 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.4.2</Version>
+    <Version>1.4.3</Version>
     <Description>Provides support for declaring covariant and contravariant generic parameters for languages that lack native support, like F#.</Description>
     <Authors>Theodore Tsirpanis</Authors>
     <Copyright>Copyright © Theodore Tsirpanis. Licensed under the MIT License.</Copyright>
-    <PackageReleaseNotes>Covarsky was updated to use Sigourney 0.4.1. There are no user-visible changes.</PackageReleaseNotes>
+    <PackageReleaseNotes>Covarsky was updated to use Sigourney 0.5.0.
+
+Diagnostics emitted by Covarsky now include a help link.</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/teo-tsirpanis/Covarsky</PackageProjectUrl>
     <PackageTags>covariance;contravariance;fsharp;sigourney</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
