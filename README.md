@@ -4,7 +4,7 @@
 
 # Covarsky
 
-Covarsky is a tool that brings covariant and contravariant generic types to .ΝΕΤ languages that do not natively support them like F#. Powered by [Sigourney], it runs an MSBuild task that modifies the assembly after compilation.
+Covarsky is a tool that brings covariant and contravariant generic types to .ΝΕΤ languages, like F#, that do not already natively support them. Powered by [Sigourney], it runs an MSBuild task that modifies the assembly after compilation.
 
 ## How to use
 
